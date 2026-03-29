@@ -7,18 +7,17 @@ require_once BASE_PATH . '/lib/flash.php';
 
 _session_start();
 
-// Redirect already-logged-in users
 if (is_logged_in()) {
     header('Location: ' . BASE_URL . '/index.php');
     exit;
 }
 
 $errors = [];
-$email  = '';
+$email = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email    = trim($_POST['email']    ?? '');
-    $password =      $_POST['password'] ?? '';
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
 
     if ($email === '') {
         $errors['email'] = 'Email is required.';
@@ -31,14 +30,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        $db   = get_db();
+        $db = get_db();
         $stmt = $db->prepare('SELECT * FROM users WHERE email = ? LIMIT 1');
         $stmt->execute([strtolower($email)]);
         $user = $stmt->fetch();
 
         if ($user && password_verify($password, $user['password_hash'])) {
             login_user($user);
-            // Basic open-redirect guard: only allow same-origin relative paths
             $next = $_POST['next'] ?? '';
             if ($next !== '' && str_starts_with($next, '/') && !str_starts_with($next, '//')) {
                 header('Location: ' . $next);
@@ -52,6 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$next_hidden = htmlspecialchars($_GET['next'] ?? '', ENT_QUOTES, 'UTF-8');
-$page_title  = 'Login';
+$nextHidden = htmlspecialchars($_GET['next'] ?? '', ENT_QUOTES, 'UTF-8');
+$pageTitle = 'Login';
 require BASE_PATH . '/views/auth/login.php';

@@ -1,0 +1,137 @@
+Table "users" {
+  "user_id" BIGINT [pk, not null, increment]
+  "email" VARCHAR(255) [not null]
+  "password_hash" VARCHAR(255) [not null]
+  "display_name" VARCHAR(120) [not null]
+  "role" VARCHAR(20) [not null, default: 'user']
+  "created_at" DATETIME [not null, default: `CURRENT_TIMESTAMP`]
+
+  Checks {
+    `role IN ('admin', 'user')` [name: 'chk_users_role']
+  }
+
+  Indexes {
+    email [unique, name: "uq_users_email"]
+  }
+}
+
+Table "user_profiles" {
+  "user_id" BIGINT [pk, not null]
+  "street" VARCHAR(200)
+  "city" VARCHAR(120)
+  "province" VARCHAR(80)
+  "postal_code" VARCHAR(20)
+  "country" VARCHAR(80)
+}
+
+Table "user_phones" {
+  "phone_id" BIGINT [pk, not null, increment]
+  "user_id" BIGINT [not null]
+  "phone_number" VARCHAR(40) [not null]
+
+  Indexes {
+    (user_id, phone_number) [unique, name: "uq_user_phones"]
+  }
+}
+
+Table "cookie_sessions" {
+  "cookie_id" VARCHAR(80) [pk, not null]
+  "user_id" BIGINT [not null]
+  "expires_at" DATETIME [not null]
+  "created_at" DATETIME [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table "seasons" {
+  "season_id" BIGINT [pk, not null, increment]
+  "league" VARCHAR(100) [not null]
+  "name" VARCHAR(60) [not null]
+
+  Indexes {
+    (league, name) [unique, name: "uq_seasons"]
+  }
+}
+
+Table "teams" {
+  "team_id" BIGINT [pk, not null, increment]
+  "name" VARCHAR(150) [not null]
+  "slug" VARCHAR(180) [not null]
+  "home_city" VARCHAR(150) [not null]
+
+  Indexes {
+    slug [unique, name: "uq_teams_slug"]
+  }
+}
+
+Table "players" {
+  "player_id" BIGINT [pk, not null, increment]
+  "first_name" VARCHAR(100) [not null]
+  "last_name" VARCHAR(100) [not null]
+  "position" VARCHAR(20) [not null]
+  "jersey_number" INT
+  "level" VARCHAR(30)
+
+  Checks {
+    `position IN ('C', 'LW', 'RW', 'D', 'G')` [name: 'chk_players_position']
+    `jersey_number IS NULL OR (jersey_number >= 0 AND jersey_number <= 99)` [name: 'chk_players_jersey']
+  }
+}
+
+Table "player_team_memberships" {
+  "membership_id" BIGINT [pk, not null, increment]
+  "player_id" BIGINT [not null]
+  "team_id" BIGINT [not null]
+  "start_date" DATE [not null]
+  "end_date" DATE
+  "note" VARCHAR(255)
+}
+
+Table "matches" {
+  "match_id" BIGINT [pk, not null, increment]
+  "season_id" BIGINT [not null]
+  "home_team_id" BIGINT [not null]
+  "away_team_id" BIGINT [not null]
+  "match_date" DATETIME [not null]
+  "venue" VARCHAR(150) [not null]
+  "home_score" INT [not null, default: 0]
+  "away_score" INT [not null, default: 0]
+
+  Indexes {
+    (season_id, match_date, home_team_id, away_team_id) [unique, name: "uq_matches"]
+  }
+}
+
+Table "player_match_stats" {
+  "player_id" BIGINT [not null]
+  "match_id" BIGINT [not null]
+  "team_id" BIGINT [not null]
+  "goals" INT [not null, default: 0]
+  "assists" INT [not null, default: 0]
+  "pim" INT [not null, default: 0]
+  "points" INT
+
+  Indexes {
+    (player_id, match_id) [pk]
+  }
+}
+
+Ref "fk_user_profiles_user":"users"."user_id" < "user_profiles"."user_id" [update: cascade, delete: cascade]
+
+Ref "fk_user_phones_user":"users"."user_id" < "user_phones"."user_id" [update: cascade, delete: cascade]
+
+Ref "fk_cookie_sessions_user":"users"."user_id" < "cookie_sessions"."user_id" [update: cascade, delete: cascade]
+
+Ref "fk_ptm_player":"players"."player_id" < "player_team_memberships"."player_id" [update: cascade, delete: restrict]
+
+Ref "fk_ptm_team":"teams"."team_id" < "player_team_memberships"."team_id" [update: cascade, delete: restrict]
+
+Ref "fk_matches_season":"seasons"."season_id" < "matches"."season_id" [update: cascade, delete: restrict]
+
+Ref "fk_matches_home_team":"teams"."team_id" < "matches"."home_team_id" [update: cascade, delete: restrict]
+
+Ref "fk_matches_away_team":"teams"."team_id" < "matches"."away_team_id" [update: cascade, delete: restrict]
+
+Ref "fk_pms_player":"players"."player_id" < "player_match_stats"."player_id" [update: cascade, delete: restrict]
+
+Ref "fk_pms_match":"matches"."match_id" < "player_match_stats"."match_id" [update: cascade, delete: cascade]
+
+Ref "fk_pms_team":"teams"."team_id" < "player_match_stats"."team_id" [update: cascade, delete: restrict]

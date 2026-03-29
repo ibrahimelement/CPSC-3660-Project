@@ -1,7 +1,4 @@
-<!-- Shared player form fields — included by admin/players/create.php and edit.php -->
-<!-- Expects: $input (array), $errors (array), allowed_positions(), allowed_levels() -->
 <div class="row g-3">
-    <!-- First Name -->
     <div class="col-sm-6">
         <label for="first_name" class="form-label">
             First Name <span class="text-danger">*</span>
@@ -16,7 +13,6 @@
         <?php endif; ?>
     </div>
 
-    <!-- Last Name -->
     <div class="col-sm-6">
         <label for="last_name" class="form-label">
             Last Name <span class="text-danger">*</span>
@@ -31,7 +27,6 @@
         <?php endif; ?>
     </div>
 
-    <!-- Position -->
     <div class="col-sm-6">
         <label for="position" class="form-label">
             Position <span class="text-danger">*</span>
@@ -52,7 +47,6 @@
         <?php endif; ?>
     </div>
 
-    <!-- Jersey Number -->
     <div class="col-sm-6">
         <label for="jersey_number" class="form-label">Jersey Number</label>
         <input type="number" id="jersey_number" name="jersey_number"
@@ -66,7 +60,6 @@
         <?php endif; ?>
     </div>
 
-    <!-- Level -->
     <div class="col-12">
         <label for="level" class="form-label">Level</label>
         <select id="level" name="level" class="form-select <?= isset($errors['level']) ? 'is-invalid' : '' ?>">

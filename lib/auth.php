@@ -1,8 +1,14 @@
+<!-- Common set of functions for managing auth across
+ ADMIN and USER sessions.
+  -->
+
 <?php
 declare(strict_types=1);
 
-// Requires BASE_PATH and BASE_URL to be defined (via config/db.php).
-
+/**
+ * Internal method to create a new session
+ * using PHP provided functions.
+ */
 function _session_start(): void
 {
     if (session_status() === PHP_SESSION_NONE) {
@@ -13,17 +19,30 @@ function _session_start(): void
     }
 }
 
+/**
+ * Extracts user attribute from the user
+ * session.
+ */
 function current_user(): ?array
 {
     _session_start();
     return $_SESSION['user'] ?? null;
 }
 
+/**
+ * Checks if there's a current user session,
+ * returns true or false respectively.
+ */
 function is_logged_in(): bool
 {
     return current_user() !== null;
 }
 
+/**
+ * Simply checks the `role` attribute
+ * associated to the user session. Returns
+ * true or false accordingly.
+ */
 function is_admin(): bool
 {
     $user = current_user();
@@ -31,8 +50,9 @@ function is_admin(): bool
 }
 
 /**
- * Redirect to login if the caller is not an authenticated admin.
- * Must be called before any output is sent.
+ * Helper method invoked to ensure that
+ * the page requested is only accessed by
+ * admins (security).
  */
 function require_admin(): void
 {
@@ -47,22 +67,23 @@ function require_admin(): void
 }
 
 /**
- * Persist the authenticated user in the session.
+ * Starts the session, and adds attributes
+ * required to the PHP session.
  */
 function login_user(array $row): void
 {
     _session_start();
     session_regenerate_id(true);
     $_SESSION['user'] = [
-        'user_id'      => (int) $row['user_id'],
-        'email'        => $row['email'],
+        'user_id' => (int) $row['user_id'],
+        'email' => $row['email'],
         'display_name' => $row['display_name'],
-        'role'         => $row['role'],
+        'role' => $row['role'],
     ];
 }
 
 /**
- * Destroy the current session completely.
+ * Deletes the user session
  */
 function logout_user(): void
 {
@@ -71,8 +92,13 @@ function logout_user(): void
     if (ini_get('session.use_cookies')) {
         $p = session_get_cookie_params();
         setcookie(
-            session_name(), '', time() - 42000,
-            $p['path'], $p['domain'], $p['secure'], $p['httponly']
+            session_name(),
+            '',
+            time() - 42000,
+            $p['path'],
+            $p['domain'],
+            $p['secure'],
+            $p['httponly']
         );
     }
     session_destroy();

@@ -39,5 +39,5 @@ if ($search !== '') {
 }
 
 $players    = $stmt->fetchAll();
-$page_title = 'Players';
+$pageTitle = 'Players';
 require BASE_PATH . '/views/public/players.php';

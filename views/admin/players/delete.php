@@ -16,15 +16,15 @@ render_flash(); ?>
             <div class="card-header bg-danger text-white fw-semibold">Delete Player</div>
             <div class="card-body p-4">
 
-                <?php if ($fk_error !== null): ?>
+                <?php if ($fkError !== null): ?>
                     <div class="alert alert-danger" role="alert">
-                        <?= htmlspecialchars($fk_error, ENT_QUOTES, 'UTF-8') ?>
+                        <?= htmlspecialchars($fkError, ENT_QUOTES, 'UTF-8') ?>
                     </div>
                 <?php endif; ?>
 
                 <p>You are about to permanently delete:</p>
                 <p class="fs-5 fw-semibold">
-                    <?= htmlspecialchars($full_name, ENT_QUOTES, 'UTF-8') ?>
+                    <?= htmlspecialchars($fullName, ENT_QUOTES, 'UTF-8') ?>
                     <span class="badge bg-secondary ms-1">
                         <?= htmlspecialchars($player['position'], ENT_QUOTES, 'UTF-8') ?>
                     </span>
@@ -38,8 +38,7 @@ render_flash(); ?>
                         <button type="submit" class="btn btn-danger">
                             Yes, Delete Player
                         </button>
-                        <a href="<?= BASE_URL ?>/pages/public/players.php"
-                            class="btn btn-outline-secondary">Cancel</a>
+                        <a href="<?= BASE_URL ?>/pages/public/players.php" class="btn btn-outline-secondary">Cancel</a>
                     </div>
                 </form>
 

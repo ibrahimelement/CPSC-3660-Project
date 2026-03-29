@@ -7,7 +7,7 @@ require_once BASE_PATH . '/lib/flash.php';
 
 _session_start();
 
-$page_title = 'Home';
+$pageTitle = 'Home';
 require_once BASE_PATH . '/partials/header.php';
 render_flash();
 ?>

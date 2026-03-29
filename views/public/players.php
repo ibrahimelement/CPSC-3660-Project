@@ -1,4 +1,5 @@
-<?php require_once BASE_PATH . '/partials/header.php'; render_flash(); ?>
+<?php require_once BASE_PATH . '/partials/header.php';
+render_flash(); ?>
 
 <div class="d-flex align-items-center justify-content-between mb-3">
   <h1 class="h3 mb-0">Players</h1>
@@ -11,13 +12,11 @@
 
 <form method="get" action="" class="mb-4">
   <div class="input-group" style="max-width: 420px;">
-    <input type="search" name="q" class="form-control"
-           placeholder="Search name or position…"
-           value="<?= htmlspecialchars($search, ENT_QUOTES, 'UTF-8') ?>">
+    <input type="search" name="q" class="form-control" placeholder="Search name or position…"
+      value="<?= htmlspecialchars($search, ENT_QUOTES, 'UTF-8') ?>">
     <button class="btn btn-outline-secondary" type="submit">Search</button>
     <?php if ($search !== ''): ?>
-      <a href="<?= BASE_URL ?>/pages/public/players.php"
-         class="btn btn-outline-secondary">Clear</a>
+      <a href="<?= BASE_URL ?>/pages/public/players.php" class="btn btn-outline-secondary">Clear</a>
     <?php endif; ?>
   </div>
 </form>
@@ -58,15 +57,15 @@
             </td>
             <td>
               <?= $p['team_name']
-                    ? htmlspecialchars($p['team_name'], ENT_QUOTES, 'UTF-8')
-                    : '<span class="text-muted">—</span>' ?>
+                ? htmlspecialchars($p['team_name'], ENT_QUOTES, 'UTF-8')
+                : '<span class="text-muted">—</span>' ?>
             </td>
             <td>
               <?php if (is_admin()): ?>
                 <a href="<?= BASE_URL ?>/pages/admin/players/edit.php?id=<?= (int) $p['player_id'] ?>"
-                   class="btn btn-sm btn-outline-warning">Edit</a>
+                  class="btn btn-sm btn-outline-warning">Edit</a>
                 <a href="<?= BASE_URL ?>/pages/admin/players/delete.php?id=<?= (int) $p['player_id'] ?>"
-                   class="btn btn-sm btn-outline-danger">Delete</a>
+                  class="btn btn-sm btn-outline-danger">Delete</a>
               <?php endif; ?>
             </td>
           </tr>

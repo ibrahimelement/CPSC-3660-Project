@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
 
+/**
+ * Set a flash message to show the user.
+ */
 function set_flash(string $type, string $message): void
 {
     if (session_status() === PHP_SESSION_NONE) {
@@ -10,7 +13,7 @@ function set_flash(string $type, string $message): void
 }
 
 /**
- * Outputs a Bootstrap alert for any pending flash message, then clears it.
+ * Displays the flash message.
  */
 function render_flash(): void
 {
@@ -24,9 +27,8 @@ function render_flash(): void
     $flash = $_SESSION['_flash'];
     unset($_SESSION['_flash']);
 
-    // Map 'error' to Bootstrap's 'danger' class
     $bsType = ($flash['type'] === 'error') ? 'danger' : $flash['type'];
-    $msg    = htmlspecialchars($flash['message'], ENT_QUOTES, 'UTF-8');
+    $msg = htmlspecialchars($flash['message'], ENT_QUOTES, 'UTF-8');
 
     echo <<<HTML
 <div class="alert alert-{$bsType} alert-dismissible fade show" role="alert">

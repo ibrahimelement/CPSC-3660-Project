@@ -1,4 +1,5 @@
-<?php require_once BASE_PATH . '/partials/header.php'; render_flash(); ?>
+<?php require_once BASE_PATH . '/partials/header.php';
+render_flash(); ?>
 
 <div class="row justify-content-center">
   <div class="col-sm-8 col-md-5 col-lg-4">
@@ -13,14 +14,13 @@
         <?php endif; ?>
 
         <form method="post" action="" novalidate>
-          <input type="hidden" name="next" value="<?= $next_hidden ?>">
+          <input type="hidden" name="next" value="<?= $nextHidden ?>">
 
           <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input type="email" id="email" name="email"
-                   class="form-control <?= isset($errors['email']) ? 'is-invalid' : '' ?>"
-                   value="<?= htmlspecialchars($email, ENT_QUOTES, 'UTF-8') ?>"
-                   autocomplete="email" required>
+              class="form-control <?= isset($errors['email']) ? 'is-invalid' : '' ?>"
+              value="<?= htmlspecialchars($email, ENT_QUOTES, 'UTF-8') ?>" autocomplete="email" required>
             <?php if (isset($errors['email'])): ?>
               <div class="invalid-feedback">
                 <?= htmlspecialchars($errors['email'], ENT_QUOTES, 'UTF-8') ?>
@@ -31,8 +31,8 @@
           <div class="mb-4">
             <label for="password" class="form-label">Password</label>
             <input type="password" id="password" name="password"
-                   class="form-control <?= isset($errors['password']) ? 'is-invalid' : '' ?>"
-                   autocomplete="current-password" required>
+              class="form-control <?= isset($errors['password']) ? 'is-invalid' : '' ?>" autocomplete="current-password"
+              required>
             <?php if (isset($errors['password'])): ?>
               <div class="invalid-feedback">
                 <?= htmlspecialchars($errors['password'], ENT_QUOTES, 'UTF-8') ?>
