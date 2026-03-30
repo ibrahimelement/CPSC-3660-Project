@@ -1,3 +1,5 @@
+-- Admin: admin@icetrack.local / Admin1234!
+-- User: user@icetrack.local / User1234
 INSERT INTO users (email, password_hash, display_name, role) VALUES
 (
     'admin@icetrack.local',

@@ -1,6 +1,7 @@
-<!-- Common validation functions here -->
 <?php
 declare(strict_types=1);
+
+// Common validation functions here
 
 function str_or_null(?string $value): ?string
 {
