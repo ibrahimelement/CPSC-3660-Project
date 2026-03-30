@@ -1,7 +1,3 @@
-<!-- Common set of functions for managing auth across
- ADMIN and USER sessions.
-  -->
-
 <?php
 declare(strict_types=1);
 

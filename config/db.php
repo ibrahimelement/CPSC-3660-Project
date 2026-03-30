@@ -1,8 +1,4 @@
-<!-- Responsible for configuraing DB connection settings -->
-
-<?php
-declare(strict_types=1);
-
+<?php declare(strict_types=1);
 // Grab DB configuration options from the `.env` file
 // Or use hardcoded settings
 define('DB_HOST', $_ENV['DB_HOST'] ?? getenv('DB_HOST') ?: 'localhost');
