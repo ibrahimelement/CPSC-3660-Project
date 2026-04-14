@@ -1,15 +1,5 @@
 <?php
-declare(strict_types=1);
-
-// import libraries
-require_once __DIR__ . '/../../../config/db.php';
-require_once BASE_PATH . '/lib/auth.php';
-require_once BASE_PATH . '/lib/flash.php';
-require_once BASE_PATH . '/lib/validators.php';
-
-// ensure session exists + admin
-_session_start();
-require_admin();
+require_once __DIR__ . '/../common.php';
 
 $getId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $postId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
@@ -94,7 +84,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$firstName, $lastName, $position, $jersey, $level, $id]);
 
         set_flash('success', 'Player updated successfully.');
-        header('Location: ' . BASE_URL . '/pages/public/players.php');
+
+        // flash the new player id
+        header('Location: ' . BASE_URL . '/pages/public/player_detail.php?id=' . $id);
         exit;
     }
 }

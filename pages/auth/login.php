@@ -1,13 +1,5 @@
 <?php
-declare(strict_types=1);
-
-// import libraries
-require_once __DIR__ . '/../../config/db.php';
-require_once BASE_PATH . '/lib/auth.php';
-require_once BASE_PATH . '/lib/flash.php';
-
-// ensure cookie is added
-_session_start();
+require_once __DIR__ . '/../common.php';
 
 // if user is already logged in, redirect them
 if (is_logged_in()) {

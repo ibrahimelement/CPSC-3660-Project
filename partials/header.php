@@ -40,6 +40,21 @@ $_user = current_user();
                     <li class="nav-item">
                         <a class="nav-link" href="<?= BASE_URL ?>/pages/public/players.php">Players</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= BASE_URL ?>/pages/public/teams.php">Teams</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="reportsMenu" data-bs-toggle="dropdown"
+                            aria-expanded="false">Reports</a>
+                        <ul class="dropdown-menu" aria-labelledby="reportsMenu">
+                            <li><a class="dropdown-item" href="<?= BASE_URL ?>/pages/public/standings.php">Standings</a>
+                            </li>
+                            <li><a class="dropdown-item"
+                                    href="<?= BASE_URL ?>/pages/public/leaderboard.php">Leaderboard</a></li>
+                            <li><a class="dropdown-item" href="<?= BASE_URL ?>/pages/public/matches.php">Match
+                                    History</a></li>
+                        </ul>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <?php if ($_user): ?>

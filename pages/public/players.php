@@ -1,15 +1,5 @@
 <?php
-declare(strict_types=1);
-
-// import libraries
-require_once __DIR__ . '/../../config/db.php';
-require_once BASE_PATH . '/lib/auth.php';
-require_once BASE_PATH . '/lib/flash.php';
-
-// create user session
-_session_start();
-
-$db = get_db();
+require_once __DIR__ . '/common.php';
 
 // get search term
 $search = trim($_GET['q'] ?? '');
@@ -18,7 +8,7 @@ if ($search !== '') {
     $like = '%' . $search . '%';
     // grab players where firstname/lastname/position equal the input search terms
     $stmt = $db->prepare(
-        'SELECT p.player_id, p.first_name, p.last_name, p.position, p.jersey_number, p.level, t.name AS team_name
+        'SELECT DISTINCT p.player_id, p.first_name, p.last_name, p.position, p.jersey_number, p.level, t.name AS team_name
          FROM players p
          LEFT JOIN player_team_memberships m ON m.player_id = p.player_id AND m.end_date IS NULL
          LEFT JOIN teams t ON t.team_id = m.team_id
@@ -31,7 +21,7 @@ if ($search !== '') {
 
     // run the same query with no parameters
     $stmt = $db->prepare(
-        'SELECT p.player_id, p.first_name, p.last_name, p.position, p.jersey_number, p.level, t.name AS team_name
+        'SELECT DISTINCT p.player_id, p.first_name, p.last_name, p.position, p.jersey_number, p.level, t.name AS team_name
          FROM players p
          LEFT JOIN player_team_memberships m ON m.player_id = p.player_id AND m.end_date IS NULL
          LEFT JOIN teams t ON t.team_id = m.team_id

@@ -1,14 +1,5 @@
 <?php
-declare(strict_types=1);
-
-// import libraries
-require_once __DIR__ . '/../../../config/db.php';
-require_once BASE_PATH . '/lib/auth.php';
-require_once BASE_PATH . '/lib/flash.php';
-
-// ensure session is created and admin only
-_session_start();
-require_admin();
+require_once __DIR__ . '/../common.php';
 
 $getId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $postId = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);

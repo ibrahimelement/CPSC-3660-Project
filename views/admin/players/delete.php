@@ -6,6 +6,11 @@ render_flash(); ?>
         <li class="breadcrumb-item">
             <a href="<?= BASE_URL ?>/pages/public/players.php">Players</a>
         </li>
+        <li class="breadcrumb-item">
+            <a href="<?= BASE_URL ?>/pages/public/player_detail.php?id=<?= (int) $player['player_id'] ?>">
+                <?= htmlspecialchars($fullName, ENT_QUOTES, 'UTF-8') ?>
+            </a>
+        </li>
         <li class="breadcrumb-item active">Delete</li>
     </ol>
 </nav>
@@ -38,7 +43,8 @@ render_flash(); ?>
                         <button type="submit" class="btn btn-danger">
                             Yes, Delete Player
                         </button>
-                        <a href="<?= BASE_URL ?>/pages/public/players.php" class="btn btn-outline-secondary">Cancel</a>
+                        <a href="<?= BASE_URL ?>/pages/public/player_detail.php?id=<?= (int) $id ?>"
+                            class="btn btn-outline-secondary">Cancel</a>
                     </div>
                 </form>
 

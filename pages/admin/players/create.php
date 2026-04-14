@@ -1,17 +1,5 @@
 <?php
-declare(strict_types=1);
-
-// import library methods from /lib
-require_once __DIR__ . '/../../../config/db.php';
-require_once BASE_PATH . '/lib/auth.php';
-require_once BASE_PATH . '/lib/flash.php';
-require_once BASE_PATH . '/lib/validators.php';
-
-// ensure session is created on this page
-_session_start();
-
-// ensure user is an admin, of exit early
-require_admin();
+require_once __DIR__ . '/../common.php';
 
 $errors = [];
 
@@ -73,9 +61,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $stmt->execute([$level, $position, $jersey, $firstName, $lastName]);
 
+        $newPlayerId = $db->lastInsertId();
+
         set_flash('success', 'Player "' . htmlspecialchars($firstName . ' ' . $lastName, ENT_QUOTES, 'UTF-8') . '" created successfully!');
 
-        header('Location: ' . BASE_URL . '/pages/public/players.php');
+        header('Location: ' . BASE_URL . '/pages/public/player_detail.php?id=' . $newPlayerId);
         exit;
     }
 }

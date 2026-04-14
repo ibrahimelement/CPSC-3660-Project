@@ -41,26 +41,18 @@ render_flash(); ?>
         <?php foreach ($players as $i => $p): ?>
           <tr>
             <td><?= $i + 1 ?></td>
+            <td><a
+                href="<?= BASE_URL ?>/pages/public/player_detail.php?id=<?= (int) $p['player_id'] ?>"><?= htmlspecialchars($p['first_name'] . ' ' . $p['last_name'], ENT_QUOTES, 'UTF-8') ?></a>
+            </td>
+            <td><span class="badge bg-secondary"><?= htmlspecialchars($p['position'], ENT_QUOTES, 'UTF-8') ?></span></td>
+            <td><?= $p['jersey_number'] !== null ? '#' . (int) $p['jersey_number'] : '—' ?></td>
+            <td><?= $p['level'] ? htmlspecialchars($p['level'], ENT_QUOTES, 'UTF-8') : '—' ?></td>
             <td>
-              <?= htmlspecialchars($p['first_name'] . ' ' . $p['last_name'], ENT_QUOTES, 'UTF-8') ?>
+              <?= $p['team_name'] ? htmlspecialchars($p['team_name'], ENT_QUOTES, 'UTF-8') : '<span class="text-muted">—</span>' ?>
             </td>
             <td>
-              <span class="badge bg-secondary">
-                <?= htmlspecialchars($p['position'], ENT_QUOTES, 'UTF-8') ?>
-              </span>
-            </td>
-            <td>
-              <?= $p['jersey_number'] !== null ? '#' . (int) $p['jersey_number'] : '—' ?>
-            </td>
-            <td>
-              <?= $p['level'] ? htmlspecialchars($p['level'], ENT_QUOTES, 'UTF-8') : '—' ?>
-            </td>
-            <td>
-              <?= $p['team_name']
-                ? htmlspecialchars($p['team_name'], ENT_QUOTES, 'UTF-8')
-                : '<span class="text-muted">—</span>' ?>
-            </td>
-            <td>
+              <a href="<?= BASE_URL ?>/pages/public/player_detail.php?id=<?= (int) $p['player_id'] ?>"
+                class="btn btn-sm btn-outline-primary">View</a>
               <?php if (is_admin()): ?>
                 <a href="<?= BASE_URL ?>/pages/admin/players/edit.php?id=<?= (int) $p['player_id'] ?>"
                   class="btn btn-sm btn-outline-warning">Edit</a>

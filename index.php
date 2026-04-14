@@ -22,11 +22,14 @@ render_flash();
   <div class="col-md-8 text-center py-5">
     <h1 class="display-4 fw-bold">&#x1F3D2; IceTrack</h1>
     <p class="lead text-muted">
-      Hockey standings, player lookup, team standing!
+      Hockey standings, player statistics, team performance, and match history.
     </p>
     <div class="mt-4 d-flex gap-3 justify-content-center flex-wrap">
       <a href="<?= BASE_URL ?>/pages/public/players.php" class="btn btn-primary btn-lg">
-        Search Players
+        Browse Players
+      </a>
+      <a href="<?= BASE_URL ?>/pages/public/teams.php" class="btn btn-outline-primary btn-lg">
+        Browse Teams
       </a>
       <?php if (!is_logged_in()): ?>
         <a href="<?= BASE_URL ?>/pages/auth/login.php" class="btn btn-outline-secondary btn-lg">
