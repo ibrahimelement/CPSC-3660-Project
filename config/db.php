@@ -1,4 +1,15 @@
 <?php declare(strict_types=1);
+
+// load .env file if it exists (for local dev without Docker)
+$envPath = dirname(__FILE__, 2) . '/.env';
+if (file_exists($envPath)) {
+    foreach (file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+        if ($line[0] === '#')
+            continue;
+        putenv(trim($line));
+    }
+}
+
 // Grab DB configuration options from the `.env` file
 // Or use hardcoded settings
 define('DB_HOST', $_ENV['DB_HOST'] ?? getenv('DB_HOST') ?: 'localhost');
